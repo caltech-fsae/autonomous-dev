@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+*.DS_Store
+
+# Data directory
+data/
+
+# Images
+*.tif
+*.tiff
+*.png
+*.jpg
+*.TIF
+*.TIFF
+*.JPG
+*.PNG
