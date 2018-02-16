@@ -1,0 +1,3 @@
+This folder contains source development code for the internal map reconstruction module for the autonomous system. Stable source code should be copied into the main software folder for the vehicle.
+
+High level overview of files:
