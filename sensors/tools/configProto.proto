@@ -1,0 +1,14 @@
+syntax = "proto2";
+package sensors;
+
+message SensorConfig {
+    required string sensor_type = 1;
+
+    optional double x_pos = 2;
+    optional double y_pos = 3;
+    optional double z_pos = 4;
+
+    optional double roll = 5;
+    optional double pitch = 6;
+    optional double yaw = 7;
+}
