@@ -1,0 +1,31 @@
+syntax = "proto2";
+
+message Sensor {
+    enum SensorType {
+        CAMERA = 0;    
+    }
+    
+    required SensorType type = 1; 
+
+    message Translate {
+        optional double x = 1;
+        optional double y = 2;
+        optional double z = 3;
+    }
+
+    message Rotate {
+        optional double roll = 1;
+        optional double pitch = 2;
+        optional double yaw = 3;
+    }
+    
+    optional Translate translation = 2;
+    optional Rotate rotation = 3;
+
+    message CameraParams {
+        optional double fov = 1;
+        optional double focal_length = 2;    
+    }
+
+    optional CameraParams camera_params = 4;
+}

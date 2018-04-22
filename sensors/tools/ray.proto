@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+message Ray {
+    // A parametric equation of the form at + b
+    message Parametric {
+        required double a = 1;
+        required double b = 2;
+    }
+
+    required Parametric x = 1;
+    required Parametric y = 2;
+    required Parametric z = 3;
+}
+
+message Point {
+    optional double x = 1;
+    optional double y = 2;
+    optional double z = 3;
+}
