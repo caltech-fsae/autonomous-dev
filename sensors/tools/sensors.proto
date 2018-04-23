@@ -3,6 +3,9 @@ syntax = "proto2";
 message Sensor {
     enum SensorType {
         CAMERA = 0;
+        ACCELERATION = 1;
+        SPEED = 2;
+        RADAR = 3;
     }
 
     required SensorType type = 1;
@@ -25,7 +28,26 @@ message Sensor {
     message CameraParams {
         optional double fov = 1;
         optional double focal_length = 2;
+        optional double bit_val = 3;
+    }
+
+    message AccelParams {
+        optional double accel = 1;
+    }
+
+    message SpeedParams {
+        optional double speed = 1;
+    }
+
+    message RadarParams {
+        optional double range = 1;
+        optional double response_time = 2;
+        optional double beam_x = 3;
+        optional double beam_y = 4;
     }
 
     optional CameraParams camera_params = 4;
+    optional AccelParams accel_params = 5;
+    optional SpeedParams speed_params = 6;
+    optional RadarParams radar_params = 7;
 }
