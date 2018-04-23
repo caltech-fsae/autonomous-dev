@@ -8,7 +8,7 @@ message Sensor {
     required SensorType type = 1;
 
     message Translate {
-        optional double x = 1;
+        optional double x = 1; // Axis defined to be positive out of camera.
         optional double y = 2;
         optional double z = 3;
     }
@@ -23,14 +23,14 @@ message Sensor {
     optional Rotate rotation = 3;
 
     message CameraParams {
-        optional double fov = 1;
-        optional double focal_length = 2;
+        required double fov = 1; // Supplied in radians.
+        required double focal_length = 2;
         
         message ImageSize {
-            optional int32 width = 1;
-            optional int32 height = 2;
+            required int32 width = 1;
+            required int32 height = 2;
         }
-        optional ImageSize image_size = 3;
+        required ImageSize image_size = 3;
     }
 
     optional CameraParams camera_params = 4;

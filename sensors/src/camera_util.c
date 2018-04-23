@@ -17,6 +17,27 @@ Ray ray_for_pixel(Sensor c, Point p) {
     Ray__Parametric y = RAY__PARAMETRIC__INIT;
     Ray__Parametric z = RAY__PARAMETRIC__INIT;
 
+    Sensor__CameraParams cameraParams = *(c.camera_params);
+
+    // We need the parametric equations to cross (0, 0, 0),
+    // which is where the ray originates (center of the camera).
+    // Therefore, we can set constant terms to 0.
+    
+    x.b = 0;
+    y.b = 0;
+    z.b = 0;
+
+    double focal_length_px = (cameraParams.image_size->width * 0.5) / 
+        tan(cameraParams.fov * 0.5);
+
+    x.a = 1.0/focal_length_px;
+
+    double dy = cameraParams.image_size->width * 0.5 - p.y;
+    double dz = cameraParams.image_size->height * 0.5 - p.z;
+
+    y.b = -dy;
+    z.b = dz;
+
     retRay.x = &x;
     retRay.y = &y;
     retRay.z = &z;
