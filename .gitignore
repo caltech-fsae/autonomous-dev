@@ -20,3 +20,5 @@ data/
 *.TIFF
 *.JPG
 *.PNG
+
+out/
