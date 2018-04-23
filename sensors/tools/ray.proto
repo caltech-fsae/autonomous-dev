@@ -12,6 +12,7 @@ message Ray {
     required Parametric z = 3;
 }
 
+// If a pixel position, (0, 0) is at the top of the image.
 message Point {
     optional double x = 1;
     optional double y = 2;

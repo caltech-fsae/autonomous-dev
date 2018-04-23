@@ -11,7 +11,7 @@ message Sensor {
     required SensorType type = 1;
 
     message Translate {
-        optional double x = 1;
+        optional double x = 1; // Axis defined to be positive out of camera.
         optional double y = 2;
         optional double z = 3;
     }
@@ -26,30 +26,30 @@ message Sensor {
     optional Rotate rotation = 3;
 
     message CameraParams {
-        optional double fov = 1;
-        optional double focal_length = 2;
+        required double fov = 1; // Supplied in radians.
+        required double focal_length = 2;
 
         message ImageSize {
-            optional int32 width = 1;
-            optional int32 height = 2;
+            required int32 width = 1;
+            required int32 height = 2;
         }
-        optional ImageSize image_size = 3;
-        optional double bit_val = 4;
+        required ImageSize image_size = 3;
+        required double bit_val = 4;
     }
 
     message AccelParams {
-        optional double accel = 1;
+        required double accel = 1;
     }
 
     message SpeedParams {
-        optional double speed = 1;
+        required double speed = 1;
     }
 
     message RadarParams {
-        optional double range = 1;
-        optional double response_time = 2;
-        optional double beam_x = 3;
-        optional double beam_y = 4;
+        required double range = 1;
+        required double response_time = 2;
+        required double beam_x = 3;
+        required double beam_y = 4;
     }
 
     optional CameraParams camera_params = 4;
