@@ -48,7 +48,7 @@ message Sensor {
     message RadarParams {
         required double range = 1;
         required double response_time = 2;
-        required double beam_x = 3;
+        required double beam_x = 3; // in degrees or radians
         required double beam_y = 4;
     }
 
