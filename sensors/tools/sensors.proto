@@ -14,9 +14,9 @@ message Sensor {
     }
 
     message Rotate {
-        optional double x_axis_rot = 1;
-        optional double y_axis_rot = 2;
-        optional double z_axis_rot = 3;
+        optional double x = 1;
+        optional double y = 2;
+        optional double z = 3;
     }
 
     optional Translate translation = 2;
@@ -25,6 +25,12 @@ message Sensor {
     message CameraParams {
         optional double fov = 1;
         optional double focal_length = 2;
+        
+        message ImageSize {
+            optional int32 width = 1;
+            optional int32 height = 2;
+        }
+        optional ImageSize image_size = 3;
     }
 
     optional CameraParams camera_params = 4;
