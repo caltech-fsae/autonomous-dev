@@ -1,10 +1,9 @@
 #include <math.h>
 #include "point_util.h"
 
-// using physics coordinates
 /*  
  * Given angles and radius, can convert to a point
- * in real space. 
+ * in real space. Using physics coordinates.
  */
 Point sphere_to_cart(double theta, double phi, double rad)
 {
