@@ -2,10 +2,10 @@ syntax = "proto2";
 
 message Point {
     /* A world coordinate point with coordinates (x, y, z) and object ID */
-    required double x = 1;
-    required double y = 2;
+    required double x = ;
+    required double y = ;
     required double z = 3;
-    required int obj_id = 0;
+    required int obj_id = 4;
 
     /*
      * Spherical coordinate from the point cloud
@@ -13,7 +13,7 @@ message Point {
      * Phi: measured from x axis
      * Distance: measured from camera to perceived object
      */
-    optional double theta = 1;
-    optional double phi = 2;
-    optional double distance = 1;
+    optional double theta = 5;
+    optional double phi = 6;
+    optional double distance = 7;
 }
