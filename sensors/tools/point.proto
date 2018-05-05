@@ -2,8 +2,8 @@ syntax = "proto2";
 
 message Point {
     /* A world coordinate point with coordinates (x, y, z) and object ID */
-    required double x = ;
-    required double y = ;
+    required double x = 1;
+    required double y = 2;
     required double z = 3;
     required int obj_id = 4;
 
