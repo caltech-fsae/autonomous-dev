@@ -1,5 +1,5 @@
 #include <math.h>
-#include "point_util.h"
+#include "pointCloud.h"
 
 /*  
  * Given angles and radius, can convert to a point
