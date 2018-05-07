@@ -1,0 +1,3 @@
+[submodule "SensorVisualizer"]
+	path = SensorVisualizer
+	url = https://github.com/caltech-fsae/SensorVisualizer
