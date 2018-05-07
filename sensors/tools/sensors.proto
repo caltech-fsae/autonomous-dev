@@ -1,5 +1,9 @@
 syntax = "proto2";
 
+message Car {
+    repeated Sensor sensors = 1;   
+}
+
 message Sensor {
     enum SensorType {
         CAMERA = 0;
