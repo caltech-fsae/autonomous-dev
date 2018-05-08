@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+message VehicleProse {
+    /* A world coordinate point with coordinates (x, y, z) for vehicle */
+    required double x = 1;
+    required double y = 2;
+    required double z = 3;
+
+    /* Add transformation function from car to world position. */
+}
