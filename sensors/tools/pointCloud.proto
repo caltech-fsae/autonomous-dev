@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+message pointCloud {
+    /* A world coordinate point with coordinates (x, y, z) and object ID */
+    optional double x = 1;
+    optional double y = 2;
+    optional double z = 3;
+    required int obj_id = 4;
+
+    /*
+     * Spherical coordinates from the point cloud
+     * Theta: measured from z axis
+     * Phi: measured from x axis
+     * Distance: measured from camera to perceived object
+     */
+    optional double theta = 5;
+    optional double phi = 6;
+    optional double distance = 7;
+}
