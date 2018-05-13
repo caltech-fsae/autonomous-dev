@@ -1,11 +1,16 @@
 syntax = "proto2";
 
+message Car {
+    repeated Sensor sensors = 1;
+}
+
 message Sensor {
     enum SensorType {
         CAMERA = 0;
         ACCELERATION = 1;
         SPEED = 2;
         RADAR = 3;
+        LIDAR = 4; 
     }
 
     required SensorType type = 1;
@@ -50,6 +55,14 @@ message Sensor {
         required double response_time = 2;
         required double beam_x = 3; // in degrees or radians
         required double beam_y = 4;
+    }
+
+    message LidarParams {
+        required double range = 1;
+        required double response_time = 2;
+        required double frequency = 3
+        required double beam_x = 4; // in degrees or radians
+        required double beam_y = 5;
     }
 
     optional CameraParams camera_params = 4;
