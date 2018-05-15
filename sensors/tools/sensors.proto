@@ -1,10 +1,14 @@
 syntax = "proto2";
 
+// subclasses extended based on article:
+// https://www.indelible.org/ink/protobuf-polymorphism/
+
 message Car {
     repeated Sensor sensors = 1;
 }
 
 message Sensor {
+    extensions 100 to max; 
     enum SensorType {
         CAMERA = 0;
         ACCELERATION = 1;
