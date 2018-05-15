@@ -10,7 +10,7 @@ message Sensor {
         ACCELERATION = 1;
         SPEED = 2;
         RADAR = 3;
-        LIDAR = 4; 
+        LIDAR = 4;
     }
 
     required SensorType type = 1;
@@ -29,44 +29,54 @@ message Sensor {
 
     optional Translate translation = 2;
     optional Rotate rotation = 3;
+}
 
-    message CameraParams {
-        required double fov = 1; // Supplied in radians.
-        required double focal_length = 2;
-
-        message ImageSize {
-            required int32 width = 1;
-            required int32 height = 2;
-        }
-        required ImageSize image_size = 3;
-        required double bit_val = 4;
+message CameraParams {
+    extend Sensor {
+        required CameraParams sensor = 100;
     }
+    required double fov = 1; // Supplied in radians.
+    required double focal_length = 2;
 
-    message AccelParams {
-        required double accel = 1;
+    message ImageSize {
+        required int32 width = 1;
+        required int32 height = 2;
     }
+    required ImageSize image_size = 3;
+    required double bit_val = 4;
+}
 
-    message SpeedParams {
-        required double speed = 1;
+message AccelParams {
+    extend Sensor {
+        required AccelParams sensor = 101;
     }
+    required double accel = 1;
+}
 
-    message RadarParams {
-        required double range = 1;
-        required double response_time = 2;
-        required double beam_x = 3; // in degrees or radians
-        required double beam_y = 4;
+message SpeedParams {
+    extend Sensor {
+        required SpeedParams sensor = 102;
     }
+    required double speed = 1;
+}
 
-    message LidarParams {
-        required double range = 1;
-        required double response_time = 2;
-        required double frequency = 3
-        required double beam_x = 4; // in degrees or radians
-        required double beam_y = 5;
+message RadarParams {
+    extend Sensor {
+        required RadarParams sensor = 103;
     }
+    required double range = 1;
+    required double response_time = 2;
+    required double beam_x = 3; // in degrees or radians
+    required double beam_y = 4;
+}
 
-    optional CameraParams camera_params = 4;
-    optional AccelParams accel_params = 5;
-    optional SpeedParams speed_params = 6;
-    optional RadarParams radar_params = 7;
+message LidarParams {
+    extend Sensor {
+        required LidarParams sensor = 104;
+    }
+    required double range = 1;
+    required double response_time = 2;
+    required double frequency = 3
+    required double beam_x = 4; // in degrees or radians
+    required double beam_y = 5;
 }
