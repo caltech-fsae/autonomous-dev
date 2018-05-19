@@ -3,13 +3,13 @@
 
 #include "camera_util.h"
 
-/* 
+/*
  * Using the focal length of the camera,
  * we can use the pinhole method to compute a ray
  * originating from the camera lens to the real world
  * points that could correspond to the pixel.
  */
-Ray ray_for_pixel(Sensor c, Point p) { 
+Ray ray_for_pixel(Sensor c, Point p) {
     Ray retRay = RAY__INIT;
     assert(validate_camera(c));
 
@@ -22,12 +22,12 @@ Ray ray_for_pixel(Sensor c, Point p) {
     // We need the parametric equations to cross (0, 0, 0),
     // which is where the ray originates (center of the camera).
     // Therefore, we can set constant terms to 0.
-    
+
     x.b = 0;
     y.b = 0;
     z.b = 0;
 
-    double focal_length_px = (cameraParams.image_size->width * 0.5) / 
+    double focal_length_px = (cameraParams.image_size->width * 0.5) /
         tan(cameraParams.fov * 0.5);
 
     x.a = 1.0/focal_length_px;
@@ -35,8 +35,8 @@ Ray ray_for_pixel(Sensor c, Point p) {
     double dy = cameraParams.image_size->width * 0.5 - p.y;
     double dz = cameraParams.image_size->height * 0.5 - p.z;
 
-    y.b = -dy;
-    z.b = dz;
+    y.a = -dy;
+    z.a = dz;
 
     retRay.x = &x;
     retRay.y = &y;
@@ -77,7 +77,7 @@ void rotateAboutAxis(Point point, int axis, float angle) {
         point.y = (point.x * sin(angle) + point.y * cos(angle));
         break;
     }
-  
+
     return;
 }
 
@@ -102,13 +102,13 @@ int isInFOV(Point point, Sensor sensor) {
     tempPoint.x = point.x;
     tempPoint.y = point.y;
     tempPoint.z = point.z;
-    
+
     translate(tempPoint, -sensor.translation->x, -sensor.translation->y, -sensor.translation->z);
-    
+
     rotateAboutAxis(tempPoint, 0, -sensor.rotation->x);
     rotateAboutAxis(tempPoint, 0, -sensor.rotation->y);
     rotateAboutAxis(tempPoint, 0, -sensor.rotation->z);
-      
+
     // Now we have the coordinates of the point in the camera's ref frame
     // Assume that the z-axis points forward
     if (tempPoint.z < 0) { // Behind the camera
