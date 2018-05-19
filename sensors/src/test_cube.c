@@ -1,6 +1,6 @@
 #include <math.h>
 
-#include "camera_util.h"
+#include "test_cube.h"
 
 int test_cube(int width, int height, int length, Point center, Sensor s) {
     int count = 0;
