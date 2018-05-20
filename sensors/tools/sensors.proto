@@ -8,7 +8,7 @@ message Car {
 }
 
 message Sensor {
-    extensions 100 to max; 
+    extensions 100 to max;
     enum SensorType {
         CAMERA = 0;
         ACCELERATION = 1;
