@@ -1,3 +1,6 @@
+/*
+ * Function for creating new point proto files. Almost definitely unnecessary :( 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

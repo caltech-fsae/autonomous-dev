@@ -5,6 +5,8 @@ message VehicleProse {
     required double x = 1;
     required double y = 2;
     required double z = 3;
+    required double theta = 4;
+    required double phi = 5; 
 
     /* Transformation matrix from car to world position. */
     repeated int32 transformation = 4;
