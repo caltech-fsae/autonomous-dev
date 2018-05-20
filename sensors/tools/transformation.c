@@ -36,3 +36,27 @@ Matrix matrix_encoding_to_lidar(double distance, double theta,
     result.mat[3][3] = 1;
     return result;
 }
+
+/* Matrix transformation position from lidar to vehicle. */
+Matrix lidar_to_vehicle() {
+    /* TODO: get x, y, z from lidar. */
+    double x;
+    double y;
+    double z;
+    result.mat[0][0] = 1;
+    result.mat[0][1] = 0;
+    result.mat[0][2] = 0;
+    result.mat[0][3] = x;
+    result.mat[1][0] = 0;
+    result.mat[1][1] = 1;
+    result.mat[1][2] = 0;
+    result.mat[1][3] = y;
+    result.mat[2][0] = 0;
+    result.mat[2][1] = 0;
+    result.mat[2][2] = 1;
+    result.mat[2][3] = z;
+    result.mat[3][0] = 0;
+    result.mat[3][1] = 0;
+    result.mat[3][2] = 0;
+    result.mat[3][3] = 1;
+}
