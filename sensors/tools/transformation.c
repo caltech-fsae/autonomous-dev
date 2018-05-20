@@ -72,15 +72,6 @@ Matrix vehicle_to_world(){
     // TODO
 }
 
-// Helper function that returns transfomred matrix if given yaw
-Matrix yaw_rotation (double yaw){
-    // TODO
-    /*
-    | cos(theta) -sin(theta)      0      |
-    | sin(theta)  cos(theta)      0      |
-    |     0           1           1      |
-    */
-}
 
 // Helper function that returns transformed matrix if given pitch.
 // If track is completely flat, should not need.
@@ -119,5 +110,45 @@ Matrix final_rotation() {
 // applied.
 Point transformed_point() {
     // TODO
-    // transformed_point = translation_matrix * rotation_matrix * original_point
+    /*
+    yaw matrix:
+    | cos(x) -sin(x)  0 |
+    | sin(x)  cos(x)  0 |
+    |   0       1     1 |
+
+    pitch matrix:
+    | cos(y)  0  sin(y) |
+    |   0     1    0    |
+    |-sin(y)  0  cos(y) |
+
+    roll matrix:
+    | 1    0       0    |
+    | 0  cos(z) -sin(z) |
+    | 0  sin(z)  cos(z) |
+
+
+    translation matrix:
+    | 1 0 0 X |
+    | 0 1 0 Y |
+    | 0 0 1 Z |
+    | 0 0 0 1 |
+
+    rotation_matrix = yaw * pitch * roll
+    | cos(x)cos(y)  cos(x)sin(y)sin(z) - cos(z)sin(x)  cos(x)cos(z)sin(y) + sin(x)sin(z) |
+    | cos(y)sin(x)  cos(x)cos(z) + sin(x)sin(y)sin(z)  cos(z)sin(x)sin(y) - cos(x)sin(z) |
+    |   -sin(y)           cos(z) + cos(y)sin(z)              cos(y)cos(z) - sin(z)       |
+
+    
+    transformed_point = translation_matrix * rotation_matrix * original_point
+    | cos(x)cos(y)  cos(x)sin(y)sin(z) - cos(z)sin(x)  cos(x)cos(z)sin(y) + sin(x)sin(z)   X |
+    | cos(y)sin(x)  cos(x)cos(z) + sin(x)sin(y)sin(z)  cos(z)sin(x)sin(y) - cos(x)sin(z)   Y |
+    |   -sin(y)           cos(z) + cos(y)sin(z)              cos(y)cos(z) - sin(z)         Z |
+    |      0                        0                                   0                  1 |
+    
+    */
+
+    
+
+
+
 }
