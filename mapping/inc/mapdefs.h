@@ -8,14 +8,15 @@
 enum objtype {
     OBJ_CONE_L,
     OBJ_CONE_R,
-    OBJ_UNKNOWN
+    OBJ_UNKNOWN,
+    OBJ_NUMTYPES
 };
 typedef enum objtype Objtype;
 
 typedef struct {
-    int x;
-    int y;
-    int z;
+    double x;
+    double y;
+    double z;
     Objtype type;
 } Mapobj;
 
