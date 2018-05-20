@@ -6,6 +6,11 @@ double time_to_theta(double time, double freq) {
     return (2 * pi * freq * time);
 }
 
+// For all functions below:
+// TransformedVector = TranslationMatrix * RotationMatrix * OriginalVector;
+
+// Need rotation (pitch, yaw) and translation matrices (varies 
+// based on encoding_lvl)
 Matrix matrix_encoding_to_lidar(double distance, double theta,
         double encoding_lvl) {
     /* Calculate phi based on encoding level. */
@@ -38,6 +43,7 @@ Matrix matrix_encoding_to_lidar(double distance, double theta,
 }
 
 /* Matrix transformation position from lidar to vehicle. */
+// Need translation matrix 
 Matrix lidar_to_vehicle() {
     /* TODO: get x, y, z from lidar. */
     double x;
@@ -59,4 +65,59 @@ Matrix lidar_to_vehicle() {
     result.mat[3][1] = 0;
     result.mat[3][2] = 0;
     result.mat[3][3] = 1;
+}
+
+// Need rotation (yaw, maybe pitch) and translation matrices 
+Matrix vehicle_to_world(){
+    // TODO
+}
+
+// Helper function that returns transfomred matrix if given yaw
+Matrix yaw_rotation (double yaw){
+    // TODO
+    /*
+    | cos(theta) -sin(theta)      0      |
+    | sin(theta)  cos(theta)      0      |
+    |     0           1           1      |
+    */
+}
+
+// Helper function that returns transformed matrix if given pitch.
+// If track is completely flat, should not need.
+Matrix pitch_rotation (double pitch){
+    // TODO 
+    /*
+    | cos(theta)      0      sin(theta) |
+    |     0           1          0      |
+    |-sin(theta)      0      cos(theta) |
+    */
+}
+
+// Helper function that returns transformed vector if given vector 
+Matrix translation_matrix (double x, double y, double z){
+    //TODO
+    /*
+    | 1 0 0 X |
+    | 0 1 0 Y |
+    | 0 0 1 Z |
+    | 0 0 0 1 |
+    
+    where x, y, z are the values you want to add to your position
+
+    */ 
+}
+
+// Helper function that returns the rotation matrix after
+// both rotation matrices have been applied.
+Matrix final_rotation() {
+    // TODO 
+    // final = yaw_rotation * pitch_rotation
+}
+
+// Helper function that returns the transformed point after
+// all transformations (rotation and translation) have been
+// applied.
+Point transformed_point() {
+    // TODO
+    // transformed_point = translation_matrix * rotation_matrix * original_point
 }
