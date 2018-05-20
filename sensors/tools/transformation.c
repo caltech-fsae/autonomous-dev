@@ -71,43 +71,7 @@ Matrix vehicle_to_world(){
     // TODO
 }
 
-
-// Helper function that returns transformed matrix if given pitch.
-// If track is completely flat, should not need.
-Matrix pitch_rotation (double pitch){
-    // TODO
-    /*
-    | cos(theta)      0      sin(theta) |
-    |     0           1          0      |
-    |-sin(theta)      0      cos(theta) |
-    */
-}
-
-// Helper function that returns transformed vector if given vector
-Matrix translation_matrix (double x, double y, double z){
-    //TODO
-    /*
-    | 1 0 0 X |
-    | 0 1 0 Y |
-    | 0 0 1 Z |
-    | 0 0 0 1 |
-
-    where x, y, z are the values you want to add to your position
-
-    */
-}
-
-// Helper function that returns the rotation matrix after
-// both rotation matrices have been applied.
-Matrix final_rotation() {
-    // TODO
-    // final = yaw_rotation * pitch_rotation
-}
-
-// Helper function that returns the transformed point after
-// all transformations (rotation and translation) have been
-// applied.
-Point transformed_point() {
+Point encoding_to_world() {
     // TODO
     /*
     yaw matrix:
