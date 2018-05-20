@@ -1,16 +1,12 @@
 #include <math.h>
 #include "matrix_ops.c"
 
+// for lidar sensor
 double time_to_theta(double time, double freq) {
     /* Time should be in seconds. */
     return (2 * pi * freq * time);
 }
 
-// For all functions below:
-// TransformedVector = TranslationMatrix * RotationMatrix * OriginalVector;
-
-// Need rotation (pitch, yaw) and translation matrices (varies
-// based on encoding_lvl)
 Matrix matrix_encoding_to_lidar(double distance, double theta,
         double encoding_lvl) {    /* Calculate phi based on encoding level. */
     double phi;
@@ -42,7 +38,6 @@ Matrix matrix_encoding_to_lidar(double distance, double theta,
 }
 
 /* Matrix transformation position from lidar to vehicle. */
-// Need translation matrix
 Matrix lidar_to_vehicle() {
     /* TODO: get x, y, z from lidar. */
     double x;
