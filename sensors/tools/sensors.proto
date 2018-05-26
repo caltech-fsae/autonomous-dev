@@ -39,48 +39,53 @@ message CameraParams {
     extend Sensor {
         required CameraParams sensor = 100;
     }
-    required double fov = 1; // Supplied in radians.
-    required double focal_length = 2;
+    optional double fov = 1; // Supplied in radians.
+    optional double focal_length = 2;
 
     message ImageSize {
-        required int32 width = 1;
-        required int32 height = 2;
+        optional int32 width = 1;
+        optional int32 height = 2;
     }
-    required ImageSize image_size = 3;
-    required double bit_val = 4;
+    optional ImageSize image_size = 3;
+    optional double bit_val = 4;
 }
 
 message AccelParams {
     extend Sensor {
         required AccelParams sensor = 101;
     }
-    required double accel = 1;
+    optional double accel = 1;
 }
 
 message SpeedParams {
     extend Sensor {
         required SpeedParams sensor = 102;
     }
-    required double speed = 1;
+    optional double speed = 1;
 }
 
 message RadarParams {
     extend Sensor {
         required RadarParams sensor = 103;
     }
-    required double range = 1;
-    required double response_time = 2;
-    required double beam_x = 3; // in degrees or radians
-    required double beam_y = 4;
+    optional double range = 1;
+    optional double response_time = 2;
+    optional double beam_x = 3;        // in degrees or radians
+    optional double beam_y = 4;
 }
 
 message LidarParams {
     extend Sensor {
         required LidarParams sensor = 104;
     }
-    required double range = 1;
-    required double response_time = 2;
-    required double frequency = 3
-    required double beam_x = 4; // in degrees or radians
-    required double beam_y = 5;
+    optional double range_closest = 1;  // meters
+    optional double range_furthest = 2; // meters
+    optional double accuracy = 3;       // +/- meters
+    optional double response_time = 4;
+    optional double frequency = 5;      // Hz
+    optional double scan_speed = 6;     // seconds
+    optional double beam_x = 7;         // in degrees or radians
+    optional double beam_y = 8;
+    optional double field = 9;          // in degrees or radians
+    optional double angular_res = 10    // in degrees or radians 
 }
