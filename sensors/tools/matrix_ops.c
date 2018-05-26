@@ -4,6 +4,10 @@ typedef struct Matrix {
   double mat[2][2];
 } Matrix;
 
+typedef struct Vector {
+  double mat[2][1];
+} Vector;
+
 /* Change back to 4x4 after tests. */
 Matrix multiply(Matrix A, Matrix B) {
   /* Initialize product matrix. */
