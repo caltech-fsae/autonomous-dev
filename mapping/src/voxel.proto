@@ -5,6 +5,7 @@ message Voxel {
     required sint32 x = 1;
     required sint32 y = 2;
     required sint32 z = 3;
+    /* Map only supports up to three type/confidence pairs per voxel */
     repeated int32 types = 4 [packed=true];
     repeated double confs = 5 [packed=true];
 }

@@ -8,12 +8,19 @@
 // memset
 #include <string.h>
 
+// Wrapper around a Vox struct,
+// contains additional information for inserting into map
+// hash, for identifying the voxel's position
+// next pointer, for chaining Mapnodes together into linked lists
 typedef struct Mapnode {
     int hash;
     Vox *vox;
     struct Mapnode *next;
 } Mapnode;
 
+// Map itself
+// Contains info about number of "buckets" the hashmap uses
+// as well as a count of total number of voxels set in the map
 typedef struct {
     int numBuckets;
     int numObjs;
