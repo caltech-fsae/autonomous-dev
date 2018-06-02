@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+message Voxel {
+    /* A world coordinate point with coordinates (x, y, z) and object ID */
+    required sint32 x = 1;
+    required sint32 y = 2;
+    required sint32 z = 3;
+    repeated int32 types = 4 [packed=true];
+    repeated double confs = 5 [packed=true];
+}

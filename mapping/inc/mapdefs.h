@@ -14,10 +14,11 @@ enum objtype {
 typedef enum objtype Objtype;
 
 typedef struct {
-    double x;
-    double y;
-    double z;
-    Objtype type;
-} Mapobj;
+    int x;
+    int y;
+    int z;
+    Objtype types[3];
+    double confs[3];
+} Vox;
 
 #endif /* MAPDEFS_H */
