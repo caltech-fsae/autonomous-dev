@@ -1,80 +1,170 @@
 #include "matrix_ops.c"
 
-double time_to_theta(double time, double freq) {
-    /* Time should be in seconds. */
-    return (2 * pi * freq * time);
-}
 
-/* Multiply by r, theta, phi. */
-Matrix matrix_spherical_to_cartesian(double theta, double phi) {
-    /* Pad with zeroes to turn into a 4x4. */
-    Matrix result;
-    result.mat[0][0] = sin(theta) * cos(phi);
-    result.mat[0][1] = cos(theta) * cos(phi);
-    result.mat[0][2] = -sin(phi);
-    result.mat[0][3] = 0;
-    result.mat[1][0] = sin(theta) * sin(phi);
-    result.mat[1][1] = cos(theta) * sin(phi);
-    result.mat[1][2] = cos(phi);
-    result.mat[1][3] = 0;
-    result.mat[2][0] = cos(theta);
-    result.mat[2][1] = -sin(phi);
-    result.mat[2][2] = 0;
-    result.mat[2][3] = 0;
-    result.mat[3][0] = 0;
-    result.mat[3][1] = 0;
-    result.mat[3][2] = 0;
-    result.mat[3][3] = 0;
-    return result;
-}
-
-// For all functions below:
-// TransformedVector = TranslationMatrix * RotationMatrix * OriginalVector;
-
-// Need rotation (pitch, yaw) and translation matrices (varies
-// based on encoding_lvl)
-Matrix matrix_encoding_to_lidar(double theta, double encoding_lvl) {
-    /* Calculate phi based on encoding level. */
-    double theta;
-    double phi;
-    double height;
-    /*
-     * TODO: instead of hard coding, have a larger array of smaller 2 value
-     * arrays (height and angle) and have the index from large array correspond
-     * to encoding level.
+double time_to_phi(double time, double freq) {
+    /* 
+        Time should be in seconds. 
+        Freq is from lidar in sensors.proto.
     */
-    Matrix result;
-    /* Only transformation is from height in encoding. */
-    // result = general_transformation(theta, phi, 0, 0, 0, height);
-    return result;
+    return (2 * M_PI * freq * time);
+}
+
+/* Multiply by r, theta, phi. Using physics spherical coordinates.*/
+Matrix matrix_spherical_to_cartesian(double phi, double theta, double r) {
+    /* 
+        Theta, phi are in radians. Using physics spherical coordinates.
+        Phi is from time_to_phi.
+        Theta is from encoding array.
+        R is from lidar sensor.
+        Pad with zeroes to turn into a 4x4. 
+    */
+    // translation matrix
+    Matrix sphcart;
+    sphcart.mat[0][0] = 1;
+    sphcart.mat[0][1] = 0;
+    sphcart.mat[0][2] = 0;
+    sphcart.mat[0][3] = r * sin(theta) * cos(phi);
+    sphcart.mat[1][0] = 0;
+    sphcart.mat[1][1] = 1;
+    sphcart.mat[1][2] = 0;
+    sphcart.mat[1][3] = r * sin(theta) * sin (phi);
+    sphcart.mat[2][0] = 0;
+    sphcart.mat[2][1] = 0;
+    sphcart.mat[2][2] = 1;
+    sphcart.mat[2][3] = r * cos(theta);
+    sphcart.mat[3][0] = 0;
+    sphcart.mat[3][1] = 0;
+    sphcart.mat[3][2] = 0;
+    sphcart.mat[3][3] = 1;
+    return sphcart;
+}
+
+Matrix point_to_encoding(double phi, double theta, double r){
+    /*
+        phi is from time_to_phi. non-static.
+        theta is from encoding_lvl array. static for each encoding_lvl.
+        r is from lidar. non-static.
+    */
+
+    return matrix_spherical_to_cartesian(phi, theta, r);
+}
+
+Matrix encoding_to_lidar(double x, double y, double z) {
+    /* 
+        x, y, z are the translation from the encoding to the sensor.
+        x, y are static and the same value for each encoding_lvl.
+        z (height) is from encoding_lvl array, static for each encoding_lvl. 
+    */
+
+    // transformation matrix from encoding to lidar
+    // only includes x, y, z; doesn't include phi, theta, r
+    Matrix enc_lid;
+    enc_lid.mat[0][0] = 1;
+    enc_lid.mat[0][1] = 0;
+    enc_lid.mat[0][2] = 0;
+    enc_lid.mat[0][3] = x;
+    enc_lid.mat[1][0] = 0;
+    enc_lid.mat[1][1] = 1;
+    enc_lid.mat[1][2] = 0;
+    enc_lid.mat[1][3] = y;
+    enc_lid.mat[2][0] = 0;
+    enc_lid.mat[2][1] = 0;
+    enc_lid.mat[2][2] = 1;
+    enc_lid.mat[2][3] = z;
+    enc_lid.mat[3][0] = 0;
+    enc_lid.mat[3][1] = 0;
+    enc_lid.mat[3][2] = 0;
+    enc_lid.mat[3][3] = 1;
+
+    return enc_lid;
 }
 
 /* Matrix transformation position from lidar to vehicle. */
 // Need only translation
-Matrix lidar_to_vehicle() {
-    /* TODO: get x, y, z from lidar. */
-    double x;
-    double y;
-    double z;
-    Matrix result;
-    // result = general_transformation(0, 0, 0, x, y, z);
-    return result;
+Matrix lidar_to_vehicle(double x, double y, double z) {
+    /* 
+        x, y, z are the translation from the lidar to the vehicle.
+        x, y, z are static. 
+    */
+
+    Matrix lid_veh;
+    lid_veh.mat[0][0] = 1;
+    lid_veh.mat[0][1] = 0;
+    lid_veh.mat[0][2] = 0;
+    lid_veh.mat[0][3] = x;
+    lid_veh.mat[1][0] = 0;
+    lid_veh.mat[1][1] = 1;
+    lid_veh.mat[1][2] = 0;
+    lid_veh.mat[1][3] = y;
+    lid_veh.mat[2][0] = 0;
+    lid_veh.mat[2][1] = 0;
+    lid_veh.mat[2][2] = 1;
+    lid_veh.mat[2][3] = z;
+    lid_veh.mat[3][0] = 0;
+    lid_veh.mat[3][1] = 0;
+    lid_veh.mat[3][2] = 0;
+    lid_veh.mat[3][3] = 1;
+    return lid_veh;
 }
 
 // Need rotation and translation matrices
-Matrix vehicle_to_world(){
-    double yaw;
-    double pitch;
-    double roll;
-    double x;
-    double y;
-    double z;
-    // result = general_transformation(yaw, pitch, roll, x, y, z);
-    // TODO
+Matrix vehicle_to_world(double yaw, double pitch, double roll, double x, double y, double z){
+    /*
+        yaw, pitch, roll, x, y, z are passed in from car. all non-static.
+        ideally, if on a flat track, roll and pitch should be 0.
+    */
+
+    return general_transformation(yaw, pitch, roll, x, y, z);
 }
 
-Point encoding_to_world(Point p) {
-    // TODO
+Point encoding_to_world(Point p, time, freq, encoding_lvl_num, r, veh_yaw, veh_pitch, veh_roll, veh_x, veh_y, veh_z) {
+    Matrix point;
+    // TODO. This is definitely not how you get x, y, z from a point.
+    point.mat[0][0] = p.x;
+    point.mat[0][1] = p.y;
+    point.mat[0][2] = p.z;
+    point.mat[0][3] = 1;   // 1 if transforming pt, 0 if transforming vector
+
+
+    /* point_to_encoding:
+        takes in time, freq, encoding_lvl_num and r.
+    */
+    double phi = time_to_phi(time, freq);
+    double theta = encoding_lvl[encoding_lvl_num][1];
+    // r directly passed to function
+
+    /* encoding_to_lidar:
+        gets encoding_x, encoding_y from lidar in sensors.proto.
+        takes in encoding_lvl_num.
+    */
+    // TODO. This is definitely not how you get encoding_x, encoding_y from lidar.
+    double encoding_x = lidar.encoding_x;
+    double encoding_y = lidar.encoding_y;
+    double encoding_z = encoding_lvl[encoding_lvl_num][0];
+
+    /* lidar_to_vehicle:
+        gets lidar_x, lidar_y, lidar_z from lidar in sensors.proto.
+    */
+    // TODO. This is definitely not how you get lidar_x, lidar_y, lidar_z from lidar.
+    double lidar_x = lidar.lidar_x;
+    double lidar_y = lidar.lidar_y;
+    double lidar_z = lidar.lidar_z;
+
+    /* vehicle_to_world:
+        takes in veh_yaw, veh_pitch, veh_roll, veh_x, veh_y, veh_z
+    */
+    // all variables directly passed to function
+
+    return Multiply(vehicle_to_world(veh_yaw, veh_pitch, veh_roll, veh_x, veh_y, veh_z) * 
+                    lidar_to_vehicle(lidar_x, lidar_y, lidar_z) * 
+                    encoding_to_lidar(encoding_x, encoding_y, encoding_z) * 
+                    point_to_encoding(phi, theta, r) * 
+                    point);
+}
+
+Matrix general_transformation(double yaw, double pitch, double roll, double x, double y, double z)
+{
+    // TransformedVector = TranslationMatrix * RotationMatrix * OriginalVector;
     /*
     yaw matrix:
     | cos(y) -sin(y)  0 |
@@ -111,20 +201,9 @@ Point encoding_to_world(Point p) {
     |      0                        0                                   0                  1 |
     
     */
-    Matrix point;
-    point.mat[0][0] = p.x;
-    point.mat[0][1] = p.y;
-    point.mat[0][2] = p.z;
-    point.mat[0][3] = 1;
-
-    return Multiply(vehicle_to_world() * lidar_to_vehicle() * matrix_encoding_to_lidar() * point);
-}
-
-Matrix general_transformation(double yaw, double pitch, double roll, double x, double y, double z)
-{
     Matrix general;
     general.mat[0][0] = cos(yaw)*cos(pitch);
-    general.mat[0][1] = cos(yaw)*sin(pitch)*sin(roll) - cos(roll)*sin(yaw);
+    general.mat[0][1] = cos(yaw)*sin(pitch)*sin(roll) - cos(roll)*siny(aw);
     general.mat[0][2] = cos(yaw)*cos(roll)*sin(pitch) - sin(yaw)*sin(roll);
     general.mat[0][3] = x;
     general.mat[1][0] = cos(pitch)*sin(yaw);
@@ -138,7 +217,7 @@ Matrix general_transformation(double yaw, double pitch, double roll, double x, d
     general.mat[3][0] = 0;
     general.mat[3][1] = 0;
     general.mat[3][2] = 0;
-    general.mat[3][3] = 1;
+    general.mat[3][3] = 1; 
 
     return general;
 }
