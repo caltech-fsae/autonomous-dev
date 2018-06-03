@@ -1,6 +1,7 @@
 #include "matrix_ops.c"
 /*
- * Transformation of a single point from point cloud to world coordinate:
+ * Transformation of a single point from point cloud to world coordinate
+ * All tranformation is done using 4x4 matrices 
  * Step 1: trasnform from point to encoding
  * Transforms point in point cloud (in spherical coordinate) to encoding's
  * frame (in Cartesian), where the encoding is located at the origin. Distance
@@ -8,7 +9,16 @@
  * encoding, and angle phi is calculated based on lidar frequency and time
  * Step 2: transform from encoding to sensor
  * Transforms from encoding's frame to sensor's frame based on the height of
- * the encoding on the sensor. 
+ * the encoding on the sensor; information is stored in 2D array of width 2
+ * with encoding level corresponding to encoding height.
+ * Step 3: transform from sensor to vehicle
+ * Transforms from the sensor's frame to the vehicle's frame; depends on the
+ * lidar placement of the vehicle but is constant after vehicle is finalized.
+ * Step 4: transform from vehicle to world
+ * Transforms from the vehicle's frame to world frame. This matrix takes into
+ * account of the rotation, measured in yaw, pitch, and roll, and the
+ * translation, measured in delta x, y, and z of the vehicle. All information
+ * is extracted from the VehicleProse proto.
  */
 
 // Also, need to fix matrix pointer stuff. 
