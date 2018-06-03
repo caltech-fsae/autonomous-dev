@@ -1,9 +1,0 @@
-syntax = "proto2";
-
-message Object {
-    /* A world coordinate point with coordinates (x, y, z) and object ID */
-    required double x = 1;
-    required double y = 2;
-    required double z = 3;
-    required sint32 type = 4;
-}
