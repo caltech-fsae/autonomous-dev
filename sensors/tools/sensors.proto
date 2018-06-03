@@ -5,6 +5,7 @@ syntax = "proto2";
 
 message Car {
     repeated Sensor sensors = 1;
+    repeated Obstacle obstacles = 2;
 }
 
 message Sensor {
