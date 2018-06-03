@@ -3,14 +3,14 @@ CFLAGS=-c -g -Wall
 LDFLAGS=-lprotobuf-c
 
 
-out/maptest: obj/object.pb-c.o obj/map.o obj/maptest.o
+out/maptest: obj/voxel.pb-c.o obj/map.o obj/maptest.o
 	mkdir -p $(@D)
 	$(CC) $(INC) $^ -o $@ $(LDFLAGS)
 
-inc/object.pb-c.c: src/object.proto
-	protoc-c --c_out=./ --proto_path=src/ src/object.proto
-	mv object.pb-c.* inc/
-obj/object.pb-c.o: inc/object.pb-c.c
+inc/voxel.pb-c.c: src/voxel.proto
+	protoc-c --c_out=./ --proto_path=src/ src/voxel.proto
+	mv voxel.pb-c.* inc/
+obj/voxel.pb-c.o: inc/voxel.pb-c.c
 	mkdir -p $(@D)
 	$(CC) $(INC) $(CFLAGS) $^ -o $@
 
@@ -24,4 +24,4 @@ obj/maptest.o: tests/maptest.c
 
 clean:
 	-rm -r ./out ./obj
-	-rm inc/object.pb-c.*
+	-rm inc/voxel.pb-c.*
