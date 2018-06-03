@@ -7,13 +7,12 @@ static int encoding_lvl[3][2] = {
         {3, -M_PI/4}  // encoding lvl two  (height, theta)
     };
 
-// fix these
-double time_to_theta(double time, double freq);
 
-Matrix matrix_spherical_to_cartesian(double theta, double phi);
-
-Matrix matrix_encoding_to_lidar(double theta, double encoding_lvl);
-
-Matrix lidar_to_vehicle();
-
-Matrix vehicle_to_world();
+double time_to_phi(double time, double freq);
+Matrix matrix_spherical_to_cartesian(double phi, double theta, double r);
+Matrix point_to_encoding(double phi, double theta, double r);
+Matrix encoding_to_lidar(double x, double y, double z);
+Matrix lidar_to_vehicle(double x, double y, double z);
+Matrix vehicle_to_world(double yaw, double pitch, double roll, double x, double y, double z);
+Point encoding_to_world(Point p, time, freq, encoding_lvl_num, r, veh_yaw, veh_pitch, veh_roll, veh_x, veh_y, veh_z);
+Matrix general_transformation(double yaw, double pitch, double roll, double x, double y, double z);
