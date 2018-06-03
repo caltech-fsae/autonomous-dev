@@ -1,3 +1,15 @@
+/*
+ * Transformation of a single point from point cloud to world coordinate:
+ * Step 1: trasnform from point to encoding
+ * Transforms point in point cloud (in spherical coordinate) to encoding's
+ * frame (in Cartesian), where the encoding is located at the origin. Distance
+ * r is extracted from the point cloud, angle theta is based on the level of
+ * encoding, and angle phi is calculated based on lidar frequency and time
+ * Step 2: transform from encoding to sensor
+ * Transforms from encoding's frame to sensor's frame based on the height of
+ * the encoding on the sensor. 
+ */
+
 #include "matrix_ops.c"
 
 double time_to_theta(double time, double freq) {
@@ -103,13 +115,13 @@ Point encoding_to_world(Point p) {
     | cos(p)sin(y)  cos(y)cos(r) + sin(y)sin(p)sin(r)  cos(r)sin(y)sin(p) - cos(y)sin(r) |
     |   -sin(p)           cos(r) + cos(p)sin(r)              cos(p)cos(r) - sin(r)       |
 
-    
+
     transformed_point = translation_matrix * rotation_matrix * original_point
     | cos(y)cos(p)  cos(y)sin(p)sin(r) - cos(r)sin(y)  cos(y)cos(r)sin(p) + sin(y)sin(r)   X |
     | cos(p)sin(y)  cos(y)cos(r) + sin(y)sin(p)sin(r)  cos(r)sin(y)sin(p) - cos(y)sin(r)   Y |
     |   -sin(p)           cos(r) + cos(p)sin(r)              cos(p)cos(r) - sin(r)         Z |
     |      0                        0                                   0                  1 |
-    
+
     */
     Matrix point;
     point.mat[0][0] = p.x;
