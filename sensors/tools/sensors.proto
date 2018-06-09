@@ -5,6 +5,7 @@ syntax = "proto2";
 
 message Car {
     repeated Sensor sensors = 1;
+    repeated Obstacle obstacles = 2;
 }
 
 message Sensor {
@@ -87,10 +88,10 @@ message LidarParams {
     optional double beam_x = 7;         // in degrees or radians
     optional double beam_y = 8;
     optional double field = 9;          // in degrees or radians
-    optional double angular_res = 10    // in degrees or radians 
+    optional double angular_res = 10;    // in degrees or radians 
     optional double encoding_x = 11;    // x translation from encoding to lidar origin. in meters.
     optional double encoding_y = 12;    // y translation from encoding to lidar origin. in meters.
     optional double lidar_x = 13;       // x translation from lidar to vehicle origin. in meters.
     optional double lidar_y = 14;       // y translation from lidar to vehicle origin. in meters.
-    optional double lidar_z = 15;       // z translation from lidar to vehicle origin. in meters. 
+    optional double lidar_z = 15;       // z translation from lidar to vehicle origin. in meters.
 }
